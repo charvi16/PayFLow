@@ -281,7 +281,7 @@ commit
 * Next.js
 * React
 * Tailwind CSS
-* Zustand
+* Redux
 
 ### Backend
 
@@ -353,45 +353,4 @@ payflow-backend/
     models/
     routes/
     middleware/
-```
-
----
-
-## 🔮 Future Enhancements
-
-* 🏦 Bank simulation
-* 💳 Split bills
-* 🎁 Cashback system
-* 🤖 Fraud detection ML
-* 📊 AI dashboard
-* 🗣️ Voice assistant
-
----
-
-## 💼 Portfolio Value
-
-This project demonstrates:
-
-* ✅ Fintech system design
-* ✅ Transaction-safe architecture
-* ✅ Full-stack engineering
-* ✅ AI-ready data pipelines
-* ✅ Scalable backend thinking
-
----
-
-## 🏁 Final Positioning
-
-> **PayFlow** is not just a wallet —
-> it is a **financial data engine powering AI-driven insights (FinTrack AI)**.
-
----
-
-## ⭐ Pro Tip (for Resume)
-
-> *Designed and built PayFlow, a modular digital wallet system with transaction-safe architecture and analytics-ready pipelines, integrated with an AI financial insights engine.*
-
----
-
-```
 ```
