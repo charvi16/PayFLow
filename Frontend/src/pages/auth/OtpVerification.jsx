@@ -1,22 +1,65 @@
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-export default function OtpVerification() {
+export default function OTPVerification() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const email = location.state?.email;
+
+  const [otp, setOtp] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleVerify = async () => {
+    try {
+      setLoading(true);
+
+      const res = await fetch('http://localhost:5000/api/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message);
+        return;
+      }
+
+      // ✅ Save token
+      localStorage.setItem('token', data.token);
+
+      navigate('/dashboard');
+
+    } catch (err) {
+      console.error(err);
+      alert("Verification failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-hero-radial px-4 py-8">
-      <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md items-center">
-        <div className="card w-full p-8 text-center">
-          <h1 className="text-3xl font-semibold text-white">Verify OTP</h1>
-          <p className="mt-2 text-sm text-slate-400">Enter the 6-digit verification code sent to your device.</p>
-          <div className="mt-8 grid grid-cols-6 gap-3">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <input key={index} className="input px-0 text-center text-xl font-semibold" maxLength={1} />
-            ))}
-          </div>
-          <button onClick={() => navigate('/dashboard')} className="primary-button mt-8 w-full">Verify & Continue</button>
-          <button className="glass-button mt-3 w-full">Resend code</button>
-        </div>
+    <div className="min-h-screen bg-hero-radial flex items-center justify-center">
+      <div className="card p-8 w-full max-w-md">
+
+        <h2 className="text-2xl text-white text-center">Verify OTP</h2>
+
+        <input
+          className="input mt-6"
+          placeholder="Enter OTP"
+          value={otp}
+          onChange={(e) => setOtp(e.target.value)}
+        />
+
+        <button
+          onClick={handleVerify}
+          className="primary-button w-full mt-6"
+        >
+          {loading ? "Verifying..." : "Verify OTP"}
+        </button>
+
       </div>
     </div>
   );
